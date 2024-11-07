@@ -11,10 +11,12 @@ public class Municipio {
     @SequenceGenerator(name = "municipio_seq", sequenceName = "SEQUENCE_MUNICIPIO", allocationSize = 1)
     @Column(name = "CODIGO_MUNICIPIO")
     private Long codigoMunicipio;
+
+    @Column(name = "CODIGO_UF")
+    private Long codigoUF;
     private String nome;
     private Integer status;
 
-    @Column(name = "CODIGO_UF")
-    private Long codigoUf;
+
 
 }
