@@ -1,13 +1,12 @@
 package org.enderecosquadra.controller;
 
+import jakarta.validation.Valid;
 import org.enderecosquadra.domain.municipio.Municipio;
+import org.enderecosquadra.domain.municipio.MunicipioRequestDTO;
 import org.enderecosquadra.services.MunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +32,10 @@ public class MunicipioController {
         }
 
         return ResponseEntity.ok(municipios);
+    }
+
+    @PostMapping
+    public ResponseEntity<List<Municipio>> adicionarMunicipio(@RequestBody @Valid MunicipioRequestDTO municipioRequestDTO) {
+        return ResponseEntity.ok(municipioService.adicionarMunicipio(municipioRequestDTO));
     }
 }
