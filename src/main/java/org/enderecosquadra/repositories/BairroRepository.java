@@ -12,7 +12,7 @@ public interface BairroRepository extends JpaRepository<Bairro, Long> {
     @Query(
             "SELECT e FROM Bairro e WHERE " +
             "(:codigoBairro IS NULL OR e.codigoBairro = :codigoBairro) AND " +
-            "(:codigoMunicipio IS NULL OR e.codigoMunicipio = :codigoMunicipio) AND " +
+            "(:codigoMunicipio IS NULL OR e.municipio.codigoMunicipio = :codigoMunicipio) AND " +
             "(:nome IS NULL OR e.nome LIKE %:nome%) AND " +
             "(:status IS NULL OR e.status = :status)"
     )
@@ -22,4 +22,9 @@ public interface BairroRepository extends JpaRepository<Bairro, Long> {
             @Param("nome") String nome,
             @Param("status") Integer status
     );
+
+    boolean existsByNome(String nome);
+
+    @Query("SELECT COUNT(b) > 0 FROM Bairro b WHERE b.municipio.codigoMunicipio = :codigoMunicipio")
+    boolean existsByCodigoMunicipio(@Param("codigoMunicipio") Long codigoMunicipio);
 }

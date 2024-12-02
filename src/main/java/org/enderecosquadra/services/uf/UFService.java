@@ -1,4 +1,4 @@
-package org.enderecosquadra.services;
+package org.enderecosquadra.services.uf;
 
 import org.enderecosquadra.domain.uf.UF;
 import org.enderecosquadra.domain.uf.UFRequestDTO;

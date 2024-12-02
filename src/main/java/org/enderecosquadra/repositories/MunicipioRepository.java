@@ -11,10 +11,13 @@ import java.util.List;
 @Repository
 public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
 
+
+    boolean existsByNome(String nome);
+
     @Query(
             "SELECT e FROM Municipio e WHERE " +
             "(:codigoMunicipio IS NULL OR e.codigoMunicipio = :codigoMunicipio) AND " +
-            "(:codigoUF IS NULL OR e.codigoUF = :codigoUF) AND " +
+            "(:codigoUF IS NULL OR e.uf.codigoUF = :codigoUF) AND " +
             "(:nome IS NULL OR e.nome LIKE %:nome%) AND " +
             "(:status IS NULL OR e.status = :status)"
     )
@@ -25,5 +28,4 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
             @Param("status") Integer status
     );
 
-    boolean existsByNome(String nome);
 }

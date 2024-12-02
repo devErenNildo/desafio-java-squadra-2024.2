@@ -1,7 +1,6 @@
-package org.enderecosquadra.services;
+package org.enderecosquadra.services.uf;
 
 import org.enderecosquadra.domain.uf.UF;
-import org.enderecosquadra.domain.uf.UFRequestDTO;
 import org.enderecosquadra.exceptions.exception.ExceptionDeRetorno;
 import org.enderecosquadra.repositories.UFRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,12 @@
 package org.enderecosquadra.domain.bairro;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
+import org.enderecosquadra.domain.municipio.Municipio;
 
 @Entity
 @Table(name = "TB_BAIRRO")
+@JsonPropertyOrder({"codigoBairro", "nome", "status", "municipio"})
 public class Bairro {
 
     @Id
@@ -12,8 +15,10 @@ public class Bairro {
     @Column(name = "CODIGO_BAIRRO")
     private Long codigoBairro;
 
-    @Column(name = "CODIGO_MUNICIPIO")
-    private Long codigoMunicipio;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "CODIGO_MUNICIPIO", nullable = false)
+    private Municipio municipio;
+
     private String nome;
     private Integer status;
 
@@ -23,9 +28,8 @@ public class Bairro {
 
     }
 
-    public Bairro(Long codigoBairro, Long codigoMunicipio, String nome, Integer status) {
-        setCodigoBairro(codigoBairro);
-        setCodigoMunicipio(codigoMunicipio);
+    public Bairro(Municipio municipio, String nome, Integer status) {
+        setMunicipio(municipio);
         setNome(nome);
         setStatus(status);
     }
@@ -40,12 +44,12 @@ public class Bairro {
         this.codigoBairro = codigoBairro;
     }
 
-    public Long getCodigoMunicipio() {
-        return codigoMunicipio;
+    public Municipio getMunicipio() {
+        return municipio;
     }
 
-    public void setCodigoMunicipio(Long codigoMunicipio) {
-        this.codigoMunicipio = codigoMunicipio;
+    public void setMunicipio(Municipio codigoMunicipio) {
+        this.municipio = codigoMunicipio;
     }
 
     public String getNome() {

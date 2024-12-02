@@ -1,9 +1,16 @@
 package org.enderecosquadra.domain.municipio;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
+import org.enderecosquadra.domain.bairro.Bairro;
+import org.enderecosquadra.domain.uf.UF;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_MUNICIPIO")
+@JsonPropertyOrder({"codigoMunicipio", "nome", "status", "estado"})
 public class Municipio {
 
     @Id
@@ -12,18 +19,25 @@ public class Municipio {
     @Column(name = "CODIGO_MUNICIPIO")
     private Long codigoMunicipio;
 
-    @Column(name = "CODIGO_UF")
-    private Long codigoUF;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "CODIGO_UF", nullable = false)
+    private UF uf;
+
     private String nome;
     private Integer status;
+
+    @OneToMany(mappedBy = "municipio", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bairro> bairros = new ArrayList<>();
+
+
 
     // CONSTRUCTORS -------------------------------------------------------
     public Municipio() {
 
     }
 
-    public Municipio(Long codigoUF, String nome, Integer status) {
-        setCodigoUF(codigoUF);
+    public Municipio(UF estado, String nome, Integer status) {
+        setEstado(estado);
         setNome(nome);
         setStatus(status);
     }
@@ -38,12 +52,12 @@ public class Municipio {
         this.codigoMunicipio = codigoMunicipio;
     }
 
-    public Long getCodigoUF() {
-        return codigoUF;
+    public UF getEstado() {
+        return uf;
     }
 
-    public void setCodigoUF(Long codigoUF) {
-        this.codigoUF = codigoUF;
+    public void setEstado(UF uf) {
+        this.uf = uf;
     }
 
     public String getNome() {

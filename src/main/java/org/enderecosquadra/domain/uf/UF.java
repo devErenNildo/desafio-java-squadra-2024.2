@@ -1,9 +1,15 @@
 package org.enderecosquadra.domain.uf;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
+import org.enderecosquadra.domain.municipio.Municipio;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_UF")
+@JsonPropertyOrder({"codigoUF", "sigla", "nome", "status"})
 public class UF {
     @Id
     @Column(name = "CODIGO_UF")
@@ -13,6 +19,9 @@ public class UF {
     private String sigla;
     private String nome;
     private Integer status;
+
+    @OneToMany(mappedBy = "uf", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Municipio> municipios = new ArrayList<>();
 
 
 //  CONSTRUCTORS --------------------------------------------------------------------------

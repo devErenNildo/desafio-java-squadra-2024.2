@@ -1,13 +1,12 @@
 package org.enderecosquadra.controller;
 
-import org.enderecosquadra.domain.bairro.Bairro;
-import org.enderecosquadra.services.BairroService;
+import jakarta.validation.Valid;
+import org.enderecosquadra.domain.bairro.BairroRequestDTO;
+import org.enderecosquadra.domain.bairro.BairroResponseDTO;
+import org.enderecosquadra.services.bairro.BairroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,11 +24,17 @@ public class BairroController {
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer status
     ) {
-        List<Bairro> bairros = bairroService.buscarBairroComParametros(codigoBairro, codigoMunicipio, nome, status);
+        List<BairroResponseDTO> bairros = bairroService.buscarBairroComParametros(codigoBairro, codigoMunicipio, nome, status);
 
-        if(bairros.size() == 1)
+        if (nome != null || status != null || codigoMunicipio != null) {
+            return ResponseEntity.ok(bairros);
+        }else {
             return ResponseEntity.ok(bairros.getFirst());
+        }
+    }
 
-        return ResponseEntity.ok(bairros);
+    @PostMapping
+    public ResponseEntity<List<BairroResponseDTO>> adicionarBairro(@RequestBody @Valid BairroRequestDTO bairroRequestDTO){
+        return ResponseEntity.ok(bairroService.adicionarBairro(bairroRequestDTO));
     }
 }

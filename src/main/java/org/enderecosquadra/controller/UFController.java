@@ -4,14 +4,12 @@ import jakarta.validation.Valid;
 import org.enderecosquadra.domain.uf.UF;
 import org.enderecosquadra.domain.uf.UFRequestDTO;
 import org.enderecosquadra.domain.uf.UFRequestPutDTO;
-import org.enderecosquadra.services.UFService;
+import org.enderecosquadra.services.uf.UFService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/uf")
