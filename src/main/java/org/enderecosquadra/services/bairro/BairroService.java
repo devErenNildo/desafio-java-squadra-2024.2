@@ -2,6 +2,7 @@ package org.enderecosquadra.services.bairro;
 
 import org.enderecosquadra.domain.bairro.Bairro;
 import org.enderecosquadra.domain.bairro.BairroRequestDTO;
+import org.enderecosquadra.domain.bairro.BairroRequestPutDTO;
 import org.enderecosquadra.domain.bairro.BairroResponseDTO;
 import org.enderecosquadra.domain.municipio.Municipio;
 import org.enderecosquadra.exceptions.exception.ExceptionDeRetorno;
@@ -48,6 +49,26 @@ public class BairroService {
         return converterBairroEmDTO(bairroRepository.findAll());
     }
 
+    public List<BairroResponseDTO> editarBairro(BairroRequestPutDTO bairroRequestPutDTO){
+        Bairro bairroExistente = bairroValidacao.verificarSeBairroExiste(bairroRequestPutDTO.getCodigoBairro());
+
+        Municipio municipio = municipioRepository.findById(bairroRequestPutDTO.getCodigoMunicipio())
+                .orElseThrow(() -> new ExceptionDeRetorno(
+                        "Municipio com o código: "
+                                + bairroRequestPutDTO.getCodigoMunicipio()
+                                + "não exite")
+                );
+
+        bairroExistente.setMunicipio(municipio);
+        bairroExistente.setNome(bairroRequestPutDTO.getNome());
+        bairroExistente.setStatus(bairroRequestPutDTO.getStatus());
+
+        bairroRepository.save(bairroExistente);
+
+        return buscarBairroComParametros(null, null, null, null);
+    }
+
+    // converter bairro em bairroDTO para ser exibido ==============================================================================================
     private List<BairroResponseDTO> converterBairroEmDTO(List<Bairro> bairros){
         return bairros.stream()
                 .map(bairro -> new BairroResponseDTO(

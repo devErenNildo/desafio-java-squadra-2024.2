@@ -2,6 +2,7 @@ package org.enderecosquadra.controller;
 
 import jakarta.validation.Valid;
 import org.enderecosquadra.domain.bairro.BairroRequestDTO;
+import org.enderecosquadra.domain.bairro.BairroRequestPutDTO;
 import org.enderecosquadra.domain.bairro.BairroResponseDTO;
 import org.enderecosquadra.services.bairro.BairroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class BairroController {
     @Autowired
     private BairroService bairroService;
 
+    // BUSCAR BAIRRO ============================================================================
     @GetMapping
     public ResponseEntity<?> buscarBairroComParametros(
             @RequestParam(required = false) Long codigoBairro,
@@ -24,17 +26,28 @@ public class BairroController {
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer status
     ) {
-        List<BairroResponseDTO> bairros = bairroService.buscarBairroComParametros(codigoBairro, codigoMunicipio, nome, status);
+        List<BairroResponseDTO> bairros = bairroService.buscarBairroComParametros(
+                codigoBairro,
+                codigoMunicipio,
+                nome,
+                status
+        );
 
-        if (nome != null || status != null || codigoMunicipio != null) {
-            return ResponseEntity.ok(bairros);
-        }else {
+        if (codigoBairro != null) {
             return ResponseEntity.ok(bairros.getFirst());
+        }else {
+            return ResponseEntity.ok(bairros);
         }
     }
 
+    // ADICIONAR BAIRRO =============================================================================
     @PostMapping
     public ResponseEntity<List<BairroResponseDTO>> adicionarBairro(@RequestBody @Valid BairroRequestDTO bairroRequestDTO){
         return ResponseEntity.ok(bairroService.adicionarBairro(bairroRequestDTO));
+    }
+
+    @PutMapping
+    public ResponseEntity<List<BairroResponseDTO>> editarBairro(@RequestBody @Valid BairroRequestPutDTO bairroRequestPutDTO){
+        return ResponseEntity.ok(bairroService.editarBairro(bairroRequestPutDTO));
     }
 }

@@ -1,5 +1,6 @@
 package org.enderecosquadra.services.bairro;
 
+import org.enderecosquadra.domain.bairro.Bairro;
 import org.enderecosquadra.domain.bairro.BairroRequestDTO;
 import org.enderecosquadra.exceptions.exception.ExceptionDeRetorno;
 import org.enderecosquadra.repositories.BairroRepository;
@@ -28,5 +29,14 @@ public class BairroValidacao {
                 );
             }
         }
+    }
+
+    // VERIFICAR SE O BAIRRO EXISTE BUSCANDO PELO ID
+    protected Bairro verificarSeBairroExiste(Long id){
+        return bairroRepository.findById(id)
+                .orElseThrow(() -> new ExceptionDeRetorno(
+                        "O bairro com id: "
+                        + id + "não existe no banco de dados"
+                ));
     }
 }
