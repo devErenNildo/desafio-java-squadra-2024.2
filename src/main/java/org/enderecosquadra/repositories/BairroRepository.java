@@ -27,4 +27,6 @@ public interface BairroRepository extends JpaRepository<Bairro, Long> {
 
     @Query("SELECT COUNT(b) > 0 FROM Bairro b WHERE b.municipio.codigoMunicipio = :codigoMunicipio")
     boolean existsByCodigoMunicipio(@Param("codigoMunicipio") Long codigoMunicipio);
+
+    Bairro findByNome(String nome);
 }

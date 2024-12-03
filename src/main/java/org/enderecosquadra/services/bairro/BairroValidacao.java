@@ -2,6 +2,7 @@ package org.enderecosquadra.services.bairro;
 
 import org.enderecosquadra.domain.bairro.Bairro;
 import org.enderecosquadra.domain.bairro.BairroRequestDTO;
+import org.enderecosquadra.domain.municipio.Municipio;
 import org.enderecosquadra.exceptions.exception.ExceptionDeRetorno;
 import org.enderecosquadra.repositories.BairroRepository;
 import org.enderecosquadra.services.municipio.MunicipioValidacao;
@@ -17,18 +18,20 @@ public class BairroValidacao {
     @Autowired
     private MunicipioValidacao municipioValidacao;
 
-    protected void validarMunicipioExistenteNomeBairro(BairroRequestDTO bairroRequestDTO){
-//        municipioValidacao.verificarSeMunicipioExiste(bairroRequestDTO.getCodigoMunicipio());
 
-        if(bairroRepository.existsByNome(bairroRequestDTO.getNome())){
-            if(bairroRepository.existsByCodigoMunicipio(bairroRequestDTO.getCodigoMunicipio())){
+    protected void verificarSeBairroExisteNoMunicipio(String nomeBairro, Long codigoMunicipio){
+        municipioValidacao.verificarSeMunicipioExiste(codigoMunicipio);
+
+        if (bairroRepository.existsByNome(nomeBairro)){
+            if (bairroRepository.existsByCodigoMunicipio(codigoMunicipio)){
                 throw new ExceptionDeRetorno(
                         "O bairro com o nome: "
-                                + bairroRequestDTO.getNome()
+                                + nomeBairro
                                 + " já esta cadastrado nesse município"
                 );
             }
         }
+
     }
 
     // VERIFICAR SE O BAIRRO EXISTE BUSCANDO PELO ID

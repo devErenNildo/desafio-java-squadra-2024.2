@@ -24,7 +24,7 @@ public class MunicipioValidacao {
     }
 
     // VERIFICA SE O MUNICÍPIO EXISTE BUSCANDO PELO ID
-    protected Municipio verificarSeMunicipioExiste(Long id){
+    public Municipio verificarSeMunicipioExiste(Long id){
         return municipioRepository.findById(id)
                 .orElseThrow(() -> new ExceptionDeRetorno("O município com id: " +
                         id + " não existe no banco de dados"
