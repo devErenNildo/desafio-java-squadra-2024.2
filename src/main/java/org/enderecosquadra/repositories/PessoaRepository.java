@@ -35,6 +35,8 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
         "LEFT JOIN FETCH m.uf u " +
         "WHERE p.codigoPessoa = :codigoPessoa")
     Pessoa pessoaDetalhada(@Param("codigoPessoa") Long codigoPessoa);
+
+    boolean existsByLogin(String login);
 }
 
 

@@ -3,12 +3,17 @@ package org.enderecosquadra.domain.pessoa;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.enderecosquadra.domain.endereco.Endereco;
 import org.enderecosquadra.domain.endereco.EnderecoRequestDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PessoaRequestDTO {
+public class PessoaRequestPutDTO {
+
+    @NotNull(message = "O campo codigoPessoa é obrigatório")
+    private Long codigoPessoa;
+
     @NotBlank(message = "O campo nome é obrigatório")
     private String nome;
 
@@ -30,7 +35,8 @@ public class PessoaRequestDTO {
     @NotEmpty(message = "O campo endereço é obrigatório")
     List<EnderecoRequestDTO> enderecos = new ArrayList<>();
 
-    public PessoaRequestDTO(String nome, String sobrenome, Integer idade, String login, String senha, Integer status, List<EnderecoRequestDTO> enderecos) {
+    public PessoaRequestPutDTO(Long codigoPessoa, String nome, String sobrenome, Integer idade, String login, String senha, Integer status, List<EnderecoRequestDTO> enderecos) {
+        this.codigoPessoa = codigoPessoa;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.idade = idade;
@@ -38,6 +44,14 @@ public class PessoaRequestDTO {
         this.senha = senha;
         this.status = status;
         this.enderecos = enderecos;
+    }
+
+    public Long getCodigoPessoa() {
+        return codigoPessoa;
+    }
+
+    public void setCodigoPessoa(Long codigoPessoa) {
+        this.codigoPessoa = codigoPessoa;
     }
 
     public String getNome() {
