@@ -7,6 +7,8 @@ import org.enderecosquadra.services.uf.UFValidacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class MunicipioValidacao {
 
@@ -29,6 +31,13 @@ public class MunicipioValidacao {
                 .orElseThrow(() -> new ExceptionDeRetorno("O município com id: " +
                         id + " não existe no banco de dados"
                 ));
+    }
+
+    public void compararNomeMunicipioComUf(String nomeUf, String nomeMunicipio){
+        if(!nomeMunicipio.equals("SAO PAULO") && !nomeMunicipio.equals("RIO DE JANEIRO") && !nomeMunicipio.equals("GOIAS")){
+            if(Objects.equals(nomeMunicipio, nomeUf))
+                throw new ExceptionDeRetorno("O nome do município não pode ser o mesmo do UF");
+        }
     }
 
 

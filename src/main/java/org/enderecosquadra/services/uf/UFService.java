@@ -3,11 +3,16 @@ package org.enderecosquadra.services.uf;
 import org.enderecosquadra.domain.uf.UF;
 import org.enderecosquadra.domain.uf.UFRequestDTO;
 import org.enderecosquadra.domain.uf.UFRequestPutDTO;
+import org.enderecosquadra.exceptions.exception.ExceptionDeRetorno;
 import org.enderecosquadra.repositories.UFRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UFService {
@@ -23,6 +28,7 @@ public class UFService {
     //DEVOLVE UMA LISTA COM TODOS OS ESTADOS OU APENAS UM ESTADO DEPENDENDO DO PARÂMETRO
     public List<UF> buscarUfComParametros(Long codigoUF, String sigla, String nome, Integer status) {
         return ufRepository.findEstadoByParams(codigoUF, sigla, nome, status);
+
     }
 
 

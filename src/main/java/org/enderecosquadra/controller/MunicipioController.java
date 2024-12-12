@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/municipio")
@@ -25,6 +26,7 @@ public class MunicipioController {
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer status
     ) {
+        nome = Optional.ofNullable(nome).map(String::toUpperCase).orElse(null);
 
         List<MunicipioResponseDTO> municipios = municipioService.buscarMunicipioComParametros(codigoMunicipio, codigoUF, nome, status);
 

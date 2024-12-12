@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +42,9 @@ public class MunicipioService {
         // VERIFICA SE O ID DO ESTADO EXISTE NO BANCO DE DADOS
         UF uf = ufRepository.findById(municipioRequestDTO.getCodigoUF())
                 .orElseThrow(() -> new ExceptionDeRetorno("Uf com o código: " + municipioRequestDTO.getCodigoUF() + " não existe no banco de dados !"));
+
+        //VERIFICANDO SE O NOME DO MUNICIPIO É O MESMO DO UF
+        municipioValidacao.compararNomeMunicipioComUf(uf.getNome(), municipioRequestDTO.getNome());
 
         // CRIA UM MUNICIPIO USANDO O DTO
         Municipio municipio = new Municipio(
