@@ -4,12 +4,15 @@ import jakarta.validation.Valid;
 import org.enderecosquadra.domain.municipio.MunicipioRequestDTO;
 import org.enderecosquadra.domain.municipio.MunicipioRequestPutDTO;
 import org.enderecosquadra.domain.municipio.MunicipioResponseDTO;
+import org.enderecosquadra.exceptions.exception.ExceptionDeRetorno;
 import org.enderecosquadra.services.municipio.MunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -26,15 +29,22 @@ public class MunicipioController {
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer status
     ) {
-        nome = Optional.ofNullable(nome).map(String::toUpperCase).orElse(null);
+        try {
+            nome = Optional.ofNullable(nome).map(String::toUpperCase).orElse(null);
 
-        List<MunicipioResponseDTO> municipios = municipioService.buscarMunicipioComParametros(codigoMunicipio, codigoUF, nome, status);
+            List<MunicipioResponseDTO> municipios = municipioService.buscarMunicipioComParametros(codigoMunicipio, codigoUF, nome, status);
 
-        if(municipios.size() == 1){
-            return ResponseEntity.ok(municipios.getFirst());
+            if(codigoMunicipio != null){
+                return ResponseEntity.ok(municipios.getFirst());
+            }
+
+            return ResponseEntity.ok(municipios);
+        }catch (NoSuchElementException e){
+            return ResponseEntity.ok(Collections.emptyList());
+        } catch (Exception e){
+            throw new ExceptionDeRetorno("Aconteceu um erro inesperado, tente novamente");
         }
 
-        return ResponseEntity.ok(municipios);
     }
 
 

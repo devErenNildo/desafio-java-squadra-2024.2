@@ -19,13 +19,10 @@ public class MunicipioRequestPutDTO {
     public MunicipioRequestPutDTO(Long codigoMunicipio, Long codigoUF, String nome, Integer status) {
         this.codigoMunicipio = codigoMunicipio;
         this.codigoUF = codigoUF;
-        this.nome = nome;
+        setNome(nome);
         this.status = status;
     }
 
-    public MunicipioRequestPutDTO(){
-
-    }
 
     public Long getCodigoMunicipio() {
         return codigoMunicipio;
@@ -48,7 +45,7 @@ public class MunicipioRequestPutDTO {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.nome = nome.toUpperCase();
     }
 
     public Integer getStatus() {

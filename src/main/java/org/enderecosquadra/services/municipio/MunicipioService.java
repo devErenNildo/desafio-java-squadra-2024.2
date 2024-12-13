@@ -67,6 +67,9 @@ public class MunicipioService {
         UF uf = ufRepository.findById(municipioRequestPutDTO.getCodigoUF())
                         .orElseThrow(()-> new ExceptionDeRetorno("UF com o código: " + municipioRequestPutDTO.getCodigoUF() + " não existe"));
 
+        //VERIFICANDO SE O NOME DO MUNICIPIO É O MESMO DO UF
+        municipioValidacao.compararNomeMunicipioComUf(uf.getNome(), municipioRequestPutDTO.getNome());
+
         municipioExiste.setEstado(uf);
         municipioExiste.setNome(municipioRequestPutDTO.getNome());
         municipioExiste.setStatus(municipioRequestPutDTO.getStatus());
