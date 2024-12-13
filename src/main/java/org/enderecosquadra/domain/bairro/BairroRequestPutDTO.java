@@ -23,7 +23,7 @@ public class BairroRequestPutDTO {
     public BairroRequestPutDTO(Long codigoBairro, Long codigoMunicipio, String nome, Integer status) {
         this.codigoBairro = codigoBairro;
         this.codigoMunicipio = codigoMunicipio;
-        this.nome = nome;
+        setNome(nome);
         this.status = status;
     }
 
@@ -50,7 +50,7 @@ public class BairroRequestPutDTO {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.nome = nome.toUpperCase();
     }
 
     public Integer getStatus() {
