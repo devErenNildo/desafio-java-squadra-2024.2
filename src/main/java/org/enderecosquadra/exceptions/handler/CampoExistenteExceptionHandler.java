@@ -26,24 +26,36 @@ public class CampoExistenteExceptionHandler {
     }
 
     //  EXCEPTION PARA TRATAR CAMPOS VAZIOS NO CONTROLLER
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public ResponseEntity<ExceptionDeRetornoDTO> campoVazio(MethodArgumentNotValidException ex) {
+//
+//        // SALVA O A MENSAGEM DE ERRO DOS VALIDATIONS
+//        String msg = ex.getBindingResult().getAllErrors().getFirst().getDefaultMessage();
+//
+//        // CRIA UMA EXCEPTION COM A MENSAGEM E O STATUS
+//        ExceptionDeRetornoDTO exceptionDTO = new ExceptionDeRetornoDTO(msg, HttpStatus.BAD_REQUEST.value());
+//
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionDTO);
+//    }
+
+//    @ExceptionHandler(HttpMessageNotReadableException.class)
+//    public ResponseEntity<ExceptionDeRetornoDTO> erroNoJson(HttpMessageNotReadableException ex) {
+//        String msg = "Erro na leitura do JSON: Verifique a estrutura e a formatação da requisição.";
+//
+//        ExceptionDeRetornoDTO exceptionDTO = new ExceptionDeRetornoDTO(msg, HttpStatus.BAD_REQUEST.value());
+//
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionDTO);
+//    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionDeRetornoDTO> campoVazio(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ExceptionDeRetornoDTO> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        String message = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .collect(Collectors.joining("; "));
 
-        // SALVA O A MENSAGEM DE ERRO DOS VALIDATIONS
-        String msg = ex.getBindingResult().getAllErrors().getFirst().getDefaultMessage();
-
-        // CRIA UMA EXCEPTION COM A MENSAGEM E O STATUS
-        ExceptionDeRetornoDTO exceptionDTO = new ExceptionDeRetornoDTO(msg, HttpStatus.BAD_REQUEST.value());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionDTO);
-    }
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ExceptionDeRetornoDTO> erroNoJson(HttpMessageNotReadableException ex) {
-        String msg = "Erro na leitura do JSON: Verifique a estrutura e a formatação da requisição.";
-
-        ExceptionDeRetornoDTO exceptionDTO = new ExceptionDeRetornoDTO(msg, HttpStatus.BAD_REQUEST.value());
-
+        ExceptionDeRetornoDTO exceptionDTO = new ExceptionDeRetornoDTO(message, HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionDTO);
     }
 

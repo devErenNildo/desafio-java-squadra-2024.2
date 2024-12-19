@@ -32,7 +32,7 @@ public class Pessoa {
 
     private Integer status;
 
-    @OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "codigoPessoa", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Endereco> enderecos = new ArrayList<>();
 
     // CONSTRUCTORS ------------------------------------------------------------------------------------------------
@@ -113,4 +113,6 @@ public class Pessoa {
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
+
+
 }

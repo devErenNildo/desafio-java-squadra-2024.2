@@ -11,10 +11,10 @@ public interface BairroRepository extends JpaRepository<Bairro, Long> {
 
     @Query(
             "SELECT e FROM Bairro e WHERE " +
-            "(:codigoBairro IS NULL OR e.codigoBairro = :codigoBairro) AND " +
-            "(:codigoMunicipio IS NULL OR e.municipio.codigoMunicipio = :codigoMunicipio) AND " +
-            "(:nome IS NULL OR e.nome LIKE %:nome%) AND " +
-            "(:status IS NULL OR e.status = :status)"
+                    "(:codigoBairro IS NULL OR e.codigoBairro = :codigoBairro) AND " +
+                    "(:codigoMunicipio IS NULL OR e.municipio.codigoMunicipio = :codigoMunicipio) AND " +
+                    "(:nome IS NULL OR e.nome LIKE %:nome%) AND " +
+                    "(:status IS NULL OR e.status = :status)"
     )
     List<Bairro> buscarBairroPorParametros(
             @Param("codigoBairro") Long codigoBairro,
@@ -29,4 +29,8 @@ public interface BairroRepository extends JpaRepository<Bairro, Long> {
     boolean existsByCodigoMunicipio(@Param("codigoMunicipio") Long codigoMunicipio);
 
     Bairro findByNome(String nome);
+
+
+    @Query("SELECT COUNT(e) > 0 FROM Endereco e WHERE e.codigoPessoa.codigoPessoa = :codigoPessoa AND e.bairro.codigoBairro = :codigoBairro AND e.nomeRua = :nomeRua AND e.numero = :numero AND e.cep = :cep")
+    boolean existsByCodigoPessoaAndEndereco(@Param("codigoPessoa") Long codigoPessoa, @Param("codigoBairro") Long codigoBairro, @Param("nomeRua") String nomeRua, @Param("numero") String numero, @Param("cep") String cep);
 }

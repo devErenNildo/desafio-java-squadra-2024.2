@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.enderecosquadra.domain.endereco.Endereco;
 import org.enderecosquadra.domain.endereco.EnderecoRequestDTO;
+import org.enderecosquadra.domain.endereco.EnderecoRequestPutDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +33,9 @@ public class PessoaRequestPutDTO {
     @NotNull(message = "O campo status é obrigatório")
     private Integer status;
 
-    @NotEmpty(message = "O campo endereço é obrigatório")
-    List<EnderecoRequestDTO> enderecos = new ArrayList<>();
+    List<Endereco> enderecos = new ArrayList<>();
 
-    public PessoaRequestPutDTO(Long codigoPessoa, String nome, String sobrenome, Integer idade, String login, String senha, Integer status, List<EnderecoRequestDTO> enderecos) {
+    public PessoaRequestPutDTO(Long codigoPessoa, String nome, String sobrenome, Integer idade, String login, String senha, Integer status, List<Endereco> enderecos) {
         this.codigoPessoa = codigoPessoa;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -45,6 +45,8 @@ public class PessoaRequestPutDTO {
         this.status = status;
         this.enderecos = enderecos;
     }
+
+
 
     public Long getCodigoPessoa() {
         return codigoPessoa;
@@ -102,11 +104,11 @@ public class PessoaRequestPutDTO {
         this.status = status;
     }
 
-    public List<EnderecoRequestDTO> getEnderecos() {
+    public List<Endereco> getEnderecos() {
         return enderecos;
     }
 
-    public void setEnderecos(List<EnderecoRequestDTO> enderecos) {
+    public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
 }

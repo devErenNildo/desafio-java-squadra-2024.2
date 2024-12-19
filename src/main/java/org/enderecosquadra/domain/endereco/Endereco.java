@@ -6,12 +6,10 @@ import jakarta.persistence.*;
 import org.enderecosquadra.domain.bairro.Bairro;
 import org.enderecosquadra.domain.pessoa.Pessoa;
 
-import java.util.Optional;
-
 @Entity
 @Table(name = "TB_ENDERECO")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@JsonPropertyOrder({"codigoEndereco", "nomeRua", "numero", "complemento", "cep", "bairro"})
+@JsonPropertyOrder({"codigoEndereco", "codigoPessoa", "codigoBairro", "nomeRua", "numero", "complemento", "cep", "bairro"})
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqEndereco")
@@ -21,7 +19,7 @@ public class Endereco {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CODIGO_PESSOA", nullable = false)
-    private Pessoa pessoa;
+    private Pessoa codigoPessoa;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CODIGO_BAIRRO", nullable = false)
@@ -36,8 +34,18 @@ public class Endereco {
 
     private String cep;
 
-    public Endereco(Pessoa pessoa, Bairro bairro, String nomeRua, String numero, String complemento, String cep) {
-        this.pessoa = pessoa;
+    public Endereco(Pessoa codigoPessoa, Bairro bairro, String nomeRua, String numero, String complemento, String cep) {
+        this.codigoPessoa = codigoPessoa;
+        this.bairro = bairro;
+        this.nomeRua = nomeRua;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cep = cep;
+    }
+
+    public Endereco(Long codigoEndereco, Pessoa codigoPessoa, Bairro bairro, String nomeRua, String numero, String complemento, String cep) {
+        this.codigoEndereco = codigoEndereco;
+        this.codigoPessoa = codigoPessoa;
         this.bairro = bairro;
         this.nomeRua = nomeRua;
         this.numero = numero;
@@ -95,5 +103,17 @@ public class Endereco {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public Long getCodigoPessoa() {
+        return codigoPessoa.getCodigoPessoa();
+    }
+
+    public void setCodigoPessoa(Pessoa pessoa) {
+        this.codigoPessoa = pessoa;
+    }
+
+    public Long getCodigoBairro(){
+        return bairro.getCodigoBairro();
     }
 }

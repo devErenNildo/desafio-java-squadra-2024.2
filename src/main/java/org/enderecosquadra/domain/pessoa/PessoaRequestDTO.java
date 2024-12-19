@@ -1,9 +1,12 @@
 package org.enderecosquadra.domain.pessoa;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.enderecosquadra.domain.endereco.EnderecoRequestDTO;
+import org.enderecosquadra.exceptions.exception.ExceptionDeRetorno;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +30,19 @@ public class PessoaRequestDTO {
     @NotNull(message = "O campo status é obrigatório")
     private Integer status;
 
-    @NotEmpty(message = "O campo endereço é obrigatório")
+    @NotEmpty(message = "Informa pelo menos um endereço")
+    @Size(min = 1, message = "Informe pelo menos um endereço")
+    @Valid
     List<EnderecoRequestDTO> enderecos = new ArrayList<>();
 
-    public PessoaRequestDTO(String nome, String sobrenome, Integer idade, String login, String senha, Integer status, List<EnderecoRequestDTO> enderecos) {
+    public PessoaRequestDTO(String nome, String sobrenome, Integer idade, String login, String senha, Integer status, @NotEmpty @Valid List<EnderecoRequestDTO> enderecos) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.idade = idade;
         this.login = login;
         this.senha = senha;
         this.status = status;
-        this.enderecos = enderecos;
+        setEnderecos(enderecos);
     }
 
     public String getNome() {
@@ -93,6 +98,9 @@ public class PessoaRequestDTO {
     }
 
     public void setEnderecos(List<EnderecoRequestDTO> enderecos) {
+        if (enderecos == null || enderecos.isEmpty()) {
+            throw new IllegalArgumentException("A lista de endereços não pode estar vazia.");
+        }
         this.enderecos = enderecos;
     }
 }

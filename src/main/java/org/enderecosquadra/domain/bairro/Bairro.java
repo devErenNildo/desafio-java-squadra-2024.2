@@ -6,7 +6,7 @@ import org.enderecosquadra.domain.municipio.Municipio;
 
 @Entity
 @Table(name = "TB_BAIRRO")
-@JsonPropertyOrder({"codigoBairro", "nome", "status", "municipio"})
+@JsonPropertyOrder({"codigoBairro", "codigoMunicipio", "nome", "status", "municipio"})
 public class Bairro {
 
     @Id
@@ -66,5 +66,9 @@ public class Bairro {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getCodigoMunicipio(){
+        return municipio.getCodigoMunicipio();
     }
 }

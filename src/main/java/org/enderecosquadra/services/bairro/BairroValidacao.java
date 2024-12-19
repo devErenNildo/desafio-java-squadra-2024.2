@@ -19,7 +19,7 @@ public class BairroValidacao {
     private MunicipioValidacao municipioValidacao;
 
 
-    protected void verificarSeBairroExisteNoMunicipio(String nomeBairro, Long codigoMunicipio){
+    public void verificarSeBairroExisteNoMunicipio(String nomeBairro, Long codigoMunicipio){
         municipioValidacao.verificarSeMunicipioExiste(codigoMunicipio);
 
         if (bairroRepository.existsByNome(nomeBairro)){
@@ -35,7 +35,7 @@ public class BairroValidacao {
     }
 
     // VERIFICAR SE O BAIRRO EXISTE BUSCANDO PELO ID
-    protected Bairro verificarSeBairroExiste(Long id){
+    public Bairro verificarSeBairroExiste(Long id){
         return bairroRepository.findById(id)
                 .orElseThrow(() -> new ExceptionDeRetorno(
                         "O bairro com id: "

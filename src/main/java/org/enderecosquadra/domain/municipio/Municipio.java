@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_MUNICIPIO")
-@JsonPropertyOrder({"codigoMunicipio", "nome", "status", "estado"})
+@JsonPropertyOrder({"codigoMunicipio","codigoUF", "nome", "status", "estado"})
 public class Municipio {
 
     @Id
@@ -52,7 +52,7 @@ public class Municipio {
         this.codigoMunicipio = codigoMunicipio;
     }
 
-    public UF getEstado() {
+    public UF getUF() {
         return uf;
     }
 
@@ -74,5 +74,9 @@ public class Municipio {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getCodigoUF(){
+        return uf.getCodigoUF();
     }
 }

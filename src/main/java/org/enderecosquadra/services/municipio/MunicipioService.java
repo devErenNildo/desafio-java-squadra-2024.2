@@ -88,7 +88,7 @@ public class MunicipioService {
         return municipios.stream()
                 .map(municipio -> new MunicipioResponseDTO(
                         municipio.getCodigoMunicipio(),
-                        municipio.getEstado().getCodigoUF(),
+                        municipio.getUF().getCodigoUF(),
                         municipio.getNome(),
                         municipio.getStatus()
                 )).collect(Collectors.toList());
